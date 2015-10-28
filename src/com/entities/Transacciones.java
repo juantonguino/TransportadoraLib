@@ -6,6 +6,7 @@
 package com.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Transacciones.findAll", query = "SELECT t FROM Transacciones t"),
-    @NamedQuery(name = "Transacciones.findById", query = "SELECT t FROM Transacciones t WHERE t.id = :id")})
+    @NamedQuery(name = "Transacciones.findById", query = "SELECT t FROM Transacciones t WHERE t.id = :id"),
+    @NamedQuery(name = "Transacciones.findByFecha", query = "SELECT t FROM Transacciones t WHERE t.fecha = :fecha")})
 public class Transacciones implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,6 +40,10 @@ public class Transacciones implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
     @JoinColumn(name = "sucursal_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Sucursal sucursalId;
@@ -50,12 +58,25 @@ public class Transacciones implements Serializable {
         this.id = id;
     }
 
+    public Transacciones(Integer id, Date fecha) {
+        this.id = id;
+        this.fecha = fecha;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public Sucursal getSucursalId() {
