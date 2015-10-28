@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 import com.entities.Sucursal;
 import com.entities.Transacciones;
 import com.entities.Vehiculo;
+import com.utils.JPAUtil;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,8 +25,8 @@ import javax.persistence.EntityManagerFactory;
  */
 public class TransaccionesJpaController implements Serializable {
 
-    public TransaccionesJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public TransaccionesJpaController() {
+        this.emf = JPAUtil.getEntityManagerFactory();
     }
     private EntityManagerFactory emf = null;
 
